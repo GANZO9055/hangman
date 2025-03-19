@@ -6,7 +6,7 @@ class Words
 {
     function getWords(): array
     {
-        return $words = ["программирование", "PHP", "разработка"];
+        return $words = ["программирование", "пхп", "разработка"];
     }
 
     function getWordByNumber(int $number): string

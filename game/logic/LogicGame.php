@@ -19,9 +19,9 @@ class LogicGame
     {
         $this->word = strtoupper($word);
         $this->numberError = 0;
-        $this->guessedLetters = array_fill(0, strlen($word), "_");
+        $this->guessedLetters = array_fill(0, mb_strlen($word), "_");
         $this->usedLetters = [];
-        $this->maxNumberError = 5;
+        $this->maxNumberError = 6;
     }
 
     public function getMaxNumberError(): int
@@ -34,10 +34,17 @@ class LogicGame
         $drawing = new Drawing();
         echo $drawing->getDrawing($this->numberError);
 
-        while (($this->numberError < $this->maxNumberError) && !$this->isWon()) {
+        while (($this->numberError < $this->maxNumberError - 1) && !$this->isWon()) {
+
             echo $this->getGuessedLetters();
 
             $letter = strtoupper(readline(""));
+            $pattern = '/[А-я]/u';
+
+            if (mb_strlen($letter) != 1 || !preg_match($pattern, $letter)) {
+                echo "Ошибка! Введите одну русскую букву.\n";
+                continue;
+            }
 
             if (in_array($letter, $this->usedLetters)) {
                 echo "Буква " . $letter . " уже была использована.\n";
@@ -45,10 +52,11 @@ class LogicGame
             }
 
             $this->usedLetters[] = $letter;
+            $arrayLetter = mb_str_split($this->word);
 
-            if (mb_strpos($this->word, $letter) !== false) {
+            if (in_array($letter, $arrayLetter)) {
                 for ($i = 0; $i < mb_strlen($this->word); $i++) {
-                    if ($this->word[$i] == $letter) {
+                    if (mb_substr($this->word, $i, 1) === $letter) {
                         $this->guessedLetters[$i] = $letter;
                         echo "Верно. Буква " . $letter . " есть в слове.\n";
                     }
@@ -60,12 +68,13 @@ class LogicGame
 
             echo $drawing->getDrawing($this->numberError);
             echo $this->getUsedLetters();
+            echo $this->getNumberError();
         }
 
         if ($this->isWon()) {
-            echo "Вы победили!";
+            echo "Вы победили! Правильное слово " . $this->word . "\n";
         } else {
-            echo "Вы проиграли!";
+            echo "Вы проиграли! Правильное слово "  . $this->word . "\n";
         }
     }
 
@@ -87,5 +96,10 @@ class LogicGame
     private function getGuessedLetters(): string
     {
         return "Слово: " . implode(' ', $this->guessedLetters) . "\n";
+    }
+
+    private function getNumberError(): string
+    {
+        return "Количество ошибок: " . $this->numberError . "\n";
     }
 }

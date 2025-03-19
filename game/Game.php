@@ -22,7 +22,7 @@ while ($game) {
     if ($string == START_GAME) {
         echo "Игра начинается!\n";
         $logic = new LogicGame($word);
-        echo "Максимальное количество ошибок: " . $logic->getMaxNumberError();
+        echo "Максимальное количество ошибок: " . $logic->getMaxNumberError() - 1;
         $logic->startGame();
         $game = $logic->gameOver();
     } else if ($string !== END_GAME) {
