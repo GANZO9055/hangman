@@ -1,7 +1,7 @@
 <?php
 
-use logic\LogicGame;
-use words\Words;
+use game\logic\LogicGame;
+use game\words\Words;
 
 require __DIR__ . '/words/Words.php';
 require __DIR__ . '/logic/LogicGame.php';

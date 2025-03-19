@@ -1,6 +1,6 @@
 <?php
 
-namespace drawing;
+namespace game\drawing;
 
 class Drawing {
     function getDrawing(int $number): string

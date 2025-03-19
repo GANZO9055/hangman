@@ -1,6 +1,6 @@
 <?php
 
-namespace words;
+namespace game\words;
 
 class Words
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace logic;
+namespace game\logic;
 
-use drawing\Drawing;
+use game\drawing\Drawing;
 
 class LogicGame
 {
