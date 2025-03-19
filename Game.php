@@ -16,13 +16,18 @@ $words = new Words();
 $word = $words->getWordByNumber(array_rand($words->getWords()));
 
 $string = trim(fgets(STDIN));
+$game = true;
 
-if ($string == START_GAME) {
-    echo "Игра начинается!\n";
-    $logic = new LogicGame($word);
-    $logic->startGame();
-} else if ($string !== END_GAME) {
-    echo "Введено неверное число. Введите 1, для старта игры, или 0, для выхода.";
+while ($game) {
+    if ($string == START_GAME) {
+        echo "Игра начинается!\n";
+        $logic = new LogicGame($word);
+        echo "Максимальное количество ошибок: " . $logic->getMaxNumberError();
+        $logic->startGame();
+        $game = $logic->gameOver();
+    } else if ($string !== END_GAME) {
+        echo "Введено неверное число. Введите 1, для старта игры, или 0, для выхода.";
+    }
 }
 
 echo "Конец игры!\n";
